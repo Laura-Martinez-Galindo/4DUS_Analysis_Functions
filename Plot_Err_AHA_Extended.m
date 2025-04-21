@@ -123,22 +123,22 @@ function plotMoreRingsAHA(data)
 
     %base,    mid    apical   apex
 
-    lbR = [ 60,120,180,240,300,0  , 60,120,180,240,300,0  ,     60,120,180,240,300,0  , 60,120,180,240,300,0  ,         45,135,225,315, 45,135,225,315,        0  ]; %limites inferiores pa cada segmento
-    ubR = [120,180,240,300,360,60 , 120,180,240,300,360,60 ,    120,180,240,300,360,60 , 120,180,240,300,360,60 ,       135,225,315,45 , 135,225,315,45 ,     360]; %limites superiores pa cada segmento
+    lbR = [ 60,60,   120,120, 180,180 ,240,240, 300,300,  0,0  ,    60,60,   120,120, 180,180 ,240,240, 300,300,  0,0,         45,45, 135,135, 225,225, 315,315,        0  ]; %limites inferiores pa cada segmento
+    ubR = [120,120,  180,180, 240,240 ,300,300, 360,360, 60,60 ,    120,120,  180,180, 240,240 ,300,300, 360,360, 60,60 ,      135,135, 225,225, 315,315, 45,45,      360]; %limites superiores pa cada segmento
     
     lbZ = [0.85,0.85,0.85,0.85,0.85,0.85      0.7,0.7,0.7,0.7,0.7,0.7,     0.55,0.55,0.55,0.55,0.55,0.55,       0.4,0.4,0.4,0.4,0.4,0.4,       0.25,0.25,0.25,0.25,        0.1,0.1,0.1,0.1,         0  ];
     ubZ = [1.0,1.0,1.0,1.0,1.0,1.0,      0.85,0.85,0.85,0.85,0.85,0.85,       0.7,0.7,0.7,0.7,0.7,0.7,          0.55,0.55,0.55,0.55,0.55,0.55,    0.4,0.4,0.4,0.4,         0.25,0.25,0.25,0.25,    0.1];
 
     % Create points for indexing
     rpts_sub = linspace(0, 360, numR+1); rpts_sub(end) = []; %elimina el ultimo punto
-    zpts_sub = (1:numZ)./numZ;
+    zpts_sub = (1:numZ)./numZ; %[0...1]
 
     for j = 1:33 %j:segmento, recorro segmentos
         for k = 1:numT %k, timepoint, recorro timepoints
             %recorre 17 segmentos AHA, por cada segmento
             %por cada segmento, recorre todos los frames temporales
             %caso normal
-            if lbR(j) < ubR(j) %lbR y ubR tienen 17 pos, recorro ambos a la vez, y compar
+            if lbR(j) < ubR(j) %lbR y ubR tienen 17 pos, recorro ambos a la vez, y comparo
                 region_avgs(k,j) = mean(lin_array(metric_data(k,rpts_sub >= lbR(j) & rpts_sub < ubR(j),zpts_sub > lbZ(j) & zpts_sub <= ubZ(j))));
             else
                 %para segmentos que cruzan el 0, como el 16

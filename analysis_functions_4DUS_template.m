@@ -101,7 +101,7 @@ end
 
 %% Extended AHA 17-Segment Radial Graphs (Err)
 
-more_segments = 1; % Double the number of angular segments
+more_segments = 0; % Double the number of angular segments
 more_rings = 1; % Increase the number of longitudinal rings
 
 for i = 1:N
