@@ -123,8 +123,8 @@ function plotMoreRingsAHA(data)
 
     %base,    mid    apical   apex
 
-    lbR = [ 60,60,   120,120, 180,180 ,240,240, 300,300,  0,0  ,    60,60,   120,120, 180,180 ,240,240, 300,300,  0,0,         45,45, 135,135, 225,225, 315,315,        0  ]; %limites inferiores pa cada segmento
-    ubR = [120,120,  180,180, 240,240 ,300,300, 360,360, 60,60 ,    120,120,  180,180, 240,240 ,300,300, 360,360, 60,60 ,      135,135, 225,225, 315,315, 45,45,      360]; %limites superiores pa cada segmento
+    lbR = [ 60,120,180,240,300,0  , 60,120,180,240,300,0  ,     60,120,180,240,300,0  , 60,120,180,240,300,0  ,         45,135,225,315, 45,135,225,315,        0  ]; %limites inferiores pa cada segmento
+    ubR = [120,180,240,300,360,60 , 120,180,240,300,360,60 ,    120,180,240,300,360,60 , 120,180,240,300,360,60 ,       135,225,315,45 , 135,225,315,45 ,     360]; %limites superiores pa cada segmento
     
     lbZ = [0.85,0.85,0.85,0.85,0.85,0.85      0.7,0.7,0.7,0.7,0.7,0.7,     0.55,0.55,0.55,0.55,0.55,0.55,       0.4,0.4,0.4,0.4,0.4,0.4,       0.25,0.25,0.25,0.25,        0.1,0.1,0.1,0.1,         0  ];
     ubZ = [1.0,1.0,1.0,1.0,1.0,1.0,      0.85,0.85,0.85,0.85,0.85,0.85,       0.7,0.7,0.7,0.7,0.7,0.7,          0.55,0.55,0.55,0.55,0.55,0.55,    0.4,0.4,0.4,0.4,         0.25,0.25,0.25,0.25,    0.1];
@@ -156,35 +156,39 @@ function plotMoreRingsAHA(data)
     [~, tpt_systole] = min(data.total_volumes);
     segment_values = region_avgs(tpt_systole,:);
     rho = [0, 0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1]; % Radii boundaries for segments
-    segment_labels = [repelem(1:16, 2), 17];
+    segment_labels = 1:33;
 
     % --- Basal (segment 1-6) ---
     basal_angles = [60 120 180 240 300 360];
     %va de angulo a angulo + 60 porque al ser 6 rebanadas, cada una mide 60, coger el valor de AHA en el array de structs, centrar etiqueta en +30
 
-    contador = 1;
     for k = 1:6
-        Plot_Segment(rho(7), rho(8), basal_angles(k), basal_angles(k)+60, segment_values(contador), basal_angles(k)+30, rho(7), segment_labels(contador));
-        Plot_Segment(rho(6), rho(7), basal_angles(k), basal_angles(k)+60, segment_values(contador+1), basal_angles(k)+30, rho(6), segment_labels(contador+1));
-        contador = contador + 2;
+        Plot_Segment(rho(7), rho(8), basal_angles(k), basal_angles(k)+60, segment_values(k), basal_angles(k)+30, rho(7), segment_labels(k));
+    end
+
+    for k = 1:6
+        Plot_Segment(rho(6), rho(7), basal_angles(k), basal_angles(k)+60, segment_values(k+6), basal_angles(k)+30, rho(6), segment_labels(k+6));
     end
 
     % --- Mid (segments 7–12) ---
     mid_angles = [60 120 180 240 300 360];
-    contador = 1;
+    
     for k = 1:6
-        Plot_Segment(rho(5), rho(6), mid_angles(k), mid_angles(k)+60, segment_values(contador+12), mid_angles(k)+30, rho(5), segment_labels(contador+12));
-        Plot_Segment(rho(4), rho(5), mid_angles(k), mid_angles(k)+60, segment_values(contador+12+1), mid_angles(k)+30, rho(4), segment_labels(contador+12+1));
-        contador = contador + 2;
+        Plot_Segment(rho(5), rho(6), mid_angles(k), mid_angles(k)+60, segment_values(k+12), mid_angles(k)+30, rho(5), segment_labels(k+12));
+    end
+
+    for k = 1:6
+        Plot_Segment(rho(4), rho(5), mid_angles(k), mid_angles(k)+60, segment_values(k+18), mid_angles(k)+30, rho(4), segment_labels(k+18));
     end
 
     % --- Apical ring (segments 13–16) ---
     apical_angles = [45 135 225 315];
-    contador = 1;
     for k = 1:4
-        Plot_Segment(rho(3), rho(4), apical_angles(k), apical_angles(k)+90, segment_values(contador+24), apical_angles(k)+45, rho(3), segment_labels(contador+24));
-        Plot_Segment(rho(2), rho(3), apical_angles(k), apical_angles(k)+90, segment_values(contador+24+1), apical_angles(k)+45, rho(2), segment_labels(contador+24+1));
-        contador = contador + 2;
+        Plot_Segment(rho(3), rho(4), apical_angles(k), apical_angles(k)+90, segment_values(k+24), apical_angles(k)+45, rho(3), segment_labels(k+24));
+    end
+
+    for k = 1:4
+        Plot_Segment(rho(2), rho(3), apical_angles(k), apical_angles(k)+90, segment_values(k+28), apical_angles(k)+45, rho(2), segment_labels(k+28));
     end
 
 
