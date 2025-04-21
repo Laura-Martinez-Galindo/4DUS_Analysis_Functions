@@ -5,7 +5,7 @@ function Plot_Err_AHA_Extended(results_struct, more_segments, more_rings)
     % Format 3: Increased number of longitudinal rings
 
     % Set colormap
-    colormap(flipud(lbmap(256,'BrownBlue')));
+    colormap(flipud(lbmap(256,'BrownBlue'))); %hi
 
 
     
